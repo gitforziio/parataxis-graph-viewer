@@ -430,11 +430,11 @@ export default function FileReaderDemo() {
   return vNode('div', null, [
 
     vNode("p", {}, [
-      vNode("span", {}, "获取数据请访问："),
+      vNode("span", {}, "本项目地址(github pages)："),
       vNode("a", {
-        href: "https://github.com/gertrude95/Chinese-Parataxis-Graph-Parsing",
+        href: "https://gitforziio.github.io/parataxis-graph-viewer/",
         target: "_blank",
-      }, "https://github.com/gertrude95/Chinese-Parataxis-Graph-Parsing"),
+      }, "https://gitforziio.github.io/parataxis-graph-viewer/"),
     ]),
 
     vNode("p", {}, [
@@ -443,6 +443,14 @@ export default function FileReaderDemo() {
         href: "https://github.com/gitforziio/parataxis-graph-viewer",
         target: "_blank",
       }, "https://github.com/gitforziio/parataxis-graph-viewer"),
+    ]),
+
+    vNode("p", {}, [
+      vNode("span", {}, "获取数据请访问："),
+      vNode("a", {
+        href: "https://github.com/gertrude95/Chinese-Parataxis-Graph-Parsing",
+        target: "_blank",
+      }, "https://github.com/gertrude95/Chinese-Parataxis-Graph-Parsing"),
     ]),
 
     FileBlock(),

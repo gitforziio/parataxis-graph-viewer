@@ -393,6 +393,10 @@ export default function FileReaderDemo() {
       vNode(Button, { theme: "default", size: "small", onClick: ()=>{go_next_item()}, }, "下一块"),
     ]),
     vNode('div', {className: "my-1 hstack gap-2 flex-wrap"}, [
+      data_item?.block_title==null ? null : [
+        vNode('span', {className: "fw-bold text-muted"}, "块标题"),
+        vNode('span', {}, data_item.block_title),
+      ],
       data_item?.source_file_name==null ? null : [
         vNode('span', {className: "fw-bold text-muted"}, "来源文件"),
         vNode('span', {}, data_item.source_file_name),

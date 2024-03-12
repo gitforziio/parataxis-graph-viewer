@@ -35,8 +35,14 @@ export default function DetailBlock(props) {
   }, []);
 
   const data_list = props?.data_list??[];
-  const [data_idx_control__main_idx, set__data_idx_control__main_idx] = useState(props?.data_idx_control__main_idx??0);
-  const [data_idx_control__nlp_idx, set__data_idx_control__nlp_idx] = useState(props?.data_idx_control__nlp_idx??0);
+  const {
+    data_idx_control__main_idx,
+    set__data_idx_control__main_idx,
+    data_idx_control__nlp_idx,
+    set__data_idx_control__nlp_idx,
+  } = props;
+  // const [data_idx_control__main_idx, set__data_idx_control__main_idx] = useState(props?.data_idx_control__main_idx??0);
+  // const [data_idx_control__nlp_idx, set__data_idx_control__nlp_idx] = useState(props?.data_idx_control__nlp_idx??0);
   const data_item = useMemo(()=>{
     return data_list?.[data_idx_control__main_idx??0]
   }, [data_list, data_idx_control__main_idx]);

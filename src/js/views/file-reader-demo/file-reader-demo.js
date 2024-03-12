@@ -437,6 +437,14 @@ export default function FileReaderDemo() {
       }, "https://github.com/gertrude95/Chinese-Parataxis-Graph-Parsing"),
     ]),
 
+    vNode("p", {}, [
+      vNode("span", {}, "本项目代码(github)："),
+      vNode("a", {
+        href: "https://github.com/gitforziio/parataxis-graph-viewer",
+        target: "_blank",
+      }, "https://github.com/gitforziio/parataxis-graph-viewer"),
+    ]),
+
     FileBlock(),
 
     nlp_data==null ? null :

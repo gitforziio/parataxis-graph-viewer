@@ -174,6 +174,19 @@ export default function FileReaderDemo() {
     );
   }, [data_list]);
 
+  const DEBUGGER_FUNCTION = () => {
+    console.log({
+      data_list,
+      set__data_list,
+      addByFilter: (filter) => {
+        const items = (data_list?.[0]?.nlp_outputs??[]).filter(filter);
+        if (items.length) {
+          set__data_list([...data_list, {nlp_outputs: items}]);
+        };
+      },
+    });
+  };
+
   const pro = async(context, json_content) => {
     const already_processed = json_content?.[0]?.nlp_outputs!=null;
     const ok_content = already_processed ? json_content : [{nlp_outputs: json_content.map((it, idx)=>({
@@ -430,7 +443,9 @@ export default function FileReaderDemo() {
   return vNode('div', null, [
 
     vNode("p", {}, [
-      vNode("span", {}, "本项目地址(github pages)："),
+      vNode("span", {
+        onClick: ()=>{DEBUGGER_FUNCTION()},
+      }, "本项目地址(github pages)："),
       vNode("a", {
         href: "https://gitforziio.github.io/parataxis-graph-viewer/",
         target: "_blank",

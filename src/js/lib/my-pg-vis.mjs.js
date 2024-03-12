@@ -468,6 +468,24 @@ const MyPGVis = class MyPGVis {
       },
     });
 
+    const marker3 = cfgSlct(svg_defs.append("marker"), {
+      attr: {
+        "id": `svg-mark-triangle-start`,
+        "viewBox": "0 -5 10 10",
+        "refX": 0-2,
+        "refY": -0,
+        "markerWidth": 6,
+        "markerHeight": 6,
+        "orient": "auto",
+      },
+    });
+    cfgSlct(marker3.append("path"), {
+      attr: {
+        "fill": "black",
+        "d": "M10,-5L0,0L10,5",
+      },
+    });
+
     // this.svg_g_bg = this.svg.append("g")
     //   .attr("class", "d3vis-chart-bg")
     //   .attr("transform", `translate(${config.margin.left}, ${config.margin.top})`)
@@ -1576,9 +1594,16 @@ const MyPGVis = class MyPGVis {
     };
 
     const _linkTypeToColor = (lk) => {
+      if ((lk?.source?.label)==("ROOT")) {
+        return "red";
+      }
+      if ((lk?.source?.idx?.[1]=="-")) {
+        return "blue";
+      }
       const map = {
         "span-[ref]-unit": (lk_)=>"#888",
         "span-[clue]-unit": (lk_)=>"#a64",
+        // "unit-[CoreWord]-unit": (lk_)=>"red",
       };
       return map?.[lk?.link_type]?.(lk) ?? "#888";
     };
@@ -1595,11 +1620,18 @@ const MyPGVis = class MyPGVis {
     };
     const _eachUnitUnitArcFn = (datum, iii, group) => {
       const points = _make_points(datum);
+      // const label_text =
+      // datum?.label?.length ? (
+      //   points.start.x > points.end.x
+      //     ? `< ${datum.label}`  // <◁◀
+      //     : `${datum.label} >`  // ▶▷>
+      // ) : ""
+      // ;
       const label_text =
       datum?.label?.length ? (
         points.start.x > points.end.x
-          ? `< ${datum.label}`  // <◁◀
-          : `${datum.label} >`  // ▶▷>
+          ? `${datum.label} >`  // <◁◀
+          : `< ${datum.label}`  // ▶▷>
       ) : ""
       ;
       const parent_selection = d3.select(group[iii]);
@@ -1609,7 +1641,8 @@ const MyPGVis = class MyPGVis {
         .attr("stroke-width", 1)
         .attr("stroke", "black")
         .attr("stroke", lk=>_linkTypeToColor(lk))
-        .attr("marker-end", `url(#svg-mark-triangle)`)
+        .attr("marker-start", `url(#svg-mark-triangle-start)`)
+        // .attr("marker-end", `url(#svg-mark-triangle)`)
         // .attr("marker-end", `url(${new URL(`#svg-mark-triangle`, location)})`)
         .attr("d", lk=>_makeUnitUnitArcFn(lk))
       ;
@@ -1673,175 +1706,6 @@ const MyPGVis = class MyPGVis {
 
 
   }
-
-  _drawArcs_OLD() {
-    // const d3 = MyPGVis.D3;
-    // const arcs_g = this.arcs_g;
-    // const arcs = this.things.units;
-    // const {
-    //   span_nodes,
-    //   unit_nodes,
-    //   span_unit_links,
-    //   unit_unit_links,
-    // } = this.forced_nodes_and_links;
-
-    // const _makeSpanUnitArcFn = (lk) => {
-    //   const mid_point = {
-    //     x: (lk.source.x + (lk.target.x-lk.source.x)/5),
-    //     y: (lk.source.y + (lk.target.y+6-lk.source.y)/5*3),
-    //   };
-    //   const drawer = d3.line(da=>da.x, da=>da.y).curve(d3.curveCatmullRom.alpha(0.1));
-    //   return drawer([lk.source, mid_point, {x: lk.target.x, y: lk.target.y+6}]);
-    // };
-
-    // const _make_points = (lk) => {
-    //   // console.log(lk);
-    //   const delta_idx = Math.abs(lk.target?.idx-lk.source?.idx);
-    //   const delta_x = Math.abs(lk.target.x-lk.source.x);
-
-    //   const min_y = Math.min(lk.source.y, lk.target.y);
-    //   const max_y = Math.max(lk.source.y, lk.target.y);
-    //   // const delta_y = Math.abs(lk.target.y-lk.source.y);
-
-    //   // const hhyy = (min_y - (delta_x/(delta_idx+1)) - 0);
-    //   const hhyy = (min_y - (delta_x*0.25) - 0);
-
-    //   const wwxx_1 = (Math.min(lk.source.x, lk.target.x) + delta_x/(delta_idx*6+2));
-    //   const wwxx_2 = (Math.max(lk.source.x, lk.target.x) - delta_x/(delta_idx*6+2));
-
-    //   const point_1 = {
-    //     x: Math?.[lk.source.x<lk.target.x?"min":"max"]?.(wwxx_1, wwxx_2),
-    //     y: hhyy,
-    //   };
-    //   const point_2 = {
-    //     x: Math?.[lk.source.x<lk.target.x?"max":"min"]?.(wwxx_1, wwxx_2),
-    //     y: hhyy,
-    //   };
-    //   const point_mid = {
-    //     x: (point_1.x + point_2.x)/2,
-    //     y: hhyy+(hhyy-min_y)/10,
-    //   };
-    //   const point_s = {
-    //     x: lk.source.x - (delta_idx-1)/(delta_idx+1)*10,
-    //     y: lk.source.y - 10,
-    //   };
-    //   const point_t = {
-    //     x: lk.target.x + (delta_idx-1)/(delta_idx+1)*10,
-    //     y: lk.target.y - 10,
-    //   };
-    //   return {
-    //     start: point_s,
-    //     m1: point_1,
-    //     mid: point_mid,
-    //     m2: point_2,
-    //     end: point_t,
-    //   };
-    // };
-
-    // const _makeUnitUnitArcFn = (lk) => {
-    //   const drawer = d3.line(da=>da.x, da=>da.y)
-    //     .curve(d3.curveMonotoneX)
-    //     // .curve(d3.curveCatmullRom.alpha(0.95))
-    //   ;
-    //   const pp = _make_points(lk);
-    //   return drawer([pp.start, pp.m1, pp.mid, pp.m2, pp.end]);
-    // };
-
-    // const _linkTypeToColor = (lk) => {
-    //   const map = {
-    //     "span-[ref]-unit": (lk_)=>"#888",
-    //     "span-[clue]-unit": (lk_)=>"#a64",
-    //   };
-    //   return map?.[lk?.link_type]?.(lk) ?? null;
-    // };
-
-    // const _eachSpanUnitArcFn = (datum, iii, group) => {
-    //   const parent_selection = d3.select(group[iii]);
-    //   parent_selection.append("path")
-    //     .attr("fill", "none")
-    //     .attr("stroke-width", 1)
-    //     .attr("stroke-dasharray", "2 2")
-    //     .attr("stroke", lk=>_linkTypeToColor(lk))
-    //     .attr("marker-end", `url(#svg-mark-arrow)`)
-    //     // .attr("marker-end", `url(${new URL(`#svg-mark-arrow`, location)})`)
-    //     .attr("d", lk=>_makeSpanUnitArcFn(lk))
-    //   ;
-    // };
-    // const _eachUnitUnitArcFn = (datum, iii, group) => {
-    //   const points = _make_points(datum);
-    //   const label_text =
-    //     points.start.x > points.end.x
-    //     ? `◀ ${datum?.label??""}`  // <◁
-    //     : `${datum?.label??""} ▶`  // ▷>
-    //   ;
-    //   const parent_selection = d3.select(group[iii]);
-    //   parent_selection.append("path")
-    //     .attr("fill", "none")
-    //     .attr("stroke-width", 1)
-    //     .attr("stroke", "black")
-    //     .attr("marker-end", `url(#svg-mark-triangle)`)
-    //     // .attr("marker-end", `url(${new URL(`#svg-mark-triangle`, location)})`)
-    //     .attr("d", lk=>_makeUnitUnitArcFn(lk))
-    //   ;
-    //   const label_x = isNaN(points?.mid?.x) ? 0 : (points?.mid?.x??0);
-    //   const label_y = (isNaN(points?.mid?.y) ? 0 : (points?.mid?.y??0)) - 2;
-    //   parent_selection.append("text")
-    //     .text(label_text)
-    //     .attr("text-anchor", `${"middle"}`)
-    //     .attr("font-size", 8)
-    //     .attr("x", label_x)
-    //     .attr("y", label_y)
-    //   ;
-    // };
-
-    // arcs_g.selectAll("g.arc-span-unit-wrap").selectAll("*").remove();
-    // arcs_g.selectAll("g.arc-span-unit-wrap").data(span_unit_links).join(
-    //   entered_selection => {
-    //     return entered_selection
-    //     .append("g")
-    //     .classed("arc-span-unit-wrap", true)
-    //     .classed("arc-span-unit-wrap-new", true)
-    //     ;
-    //   },
-    //   updated_selection => {
-    //     return updated_selection
-    //     .classed("arc-span-unit-wrap-new", false)
-    //     ;
-    //   },
-    //   exited_selection => {
-    //     return exited_selection.remove();
-    //   },
-    // )
-    // .each(_eachSpanUnitArcFn)
-    // .attr("data-label", da=>da?.label);
-
-    // arcs_g.selectAll("g.arc-unit-unit-wrap").selectAll("*").remove();
-    // arcs_g.selectAll("g.arc-unit-unit-wrap").data(unit_unit_links).join(
-    //   entered_selection => {
-    //     return entered_selection
-    //     .append("g")
-    //     .classed("arc-unit-unit-wrap", true)
-    //     .classed("arc-unit-unit-wrap-new", true)
-    //     ;
-    //   },
-    //   updated_selection => {
-    //     return updated_selection
-    //     .classed("arc-unit-unit-wrap-new", false)
-    //     ;
-    //   },
-    //   exited_selection => {
-    //     return exited_selection.remove();
-    //   },
-    // )
-    // .each(_eachUnitUnitArcFn)
-    // .attr("data-label", da=>da?.label)
-    // ;
-
-
-
-  }
-
-
 
 
 

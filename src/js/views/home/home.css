@@ -1,0 +1,31 @@
+/* .t-menu {
+  gap: 8px;
+} */
+
+header.app-header {
+  vertical-align: middle;
+  /* padding: 16px 0; */
+  height: auto;
+  /* box-shadow: 0 2px 2px rgba(0,0,0,0.05); */
+}
+
+header.app-header .logo {
+  font-weight: bolder;
+}
+
+/* .app-main-container {
+  background: #fff;
+} */
+
+main.app-main {
+  min-height: 100vh;
+}
+
+.app-main-container-wrap {
+  margin: 0 auto;
+  max-width: 1220px;
+}
+
+.app-main-content-wrap {
+  max-width: 960px;
+}

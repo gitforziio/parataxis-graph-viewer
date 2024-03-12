@@ -1,0 +1,19 @@
+
+
+diagram.diagram {
+  display: block;
+  /* max-height: 300px; */
+}
+diagram.diagram > svg {
+  display: block;
+  /* height: 100%; */
+  max-width: 100%;
+  border: #eee 1px solid;
+  margin: 0 auto;
+}
+
+/* diagram.diagram > svg g.unit-wrap.mouse-over {
+  opacity: 0.5;
+} */
+
+

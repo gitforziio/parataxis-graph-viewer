@@ -1,0 +1,15 @@
+/* @import '.././views/teach/teach.css'; */
+/* @import '.././views/user/user.css'; */
+@import '.././js/views/home/home.css';
+@import '.././js/components/MyViewPanel.css';
+
+.cursor-help {
+  cursor: help;
+}
+.cursor-help-important {
+  cursor: help !important;
+}
+
+.max-vh-50 {
+  max-height: 50vh;
+}

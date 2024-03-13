@@ -36,6 +36,7 @@ export default function DetailBlock(props) {
 
   const data_list = props?.data_list??[];
   const {
+    data_item,
     data_idx_control__main_idx,
     set__data_idx_control__main_idx,
     data_idx_control__nlp_idx,
@@ -43,9 +44,6 @@ export default function DetailBlock(props) {
   } = props;
   // const [data_idx_control__main_idx, set__data_idx_control__main_idx] = useState(props?.data_idx_control__main_idx??0);
   // const [data_idx_control__nlp_idx, set__data_idx_control__nlp_idx] = useState(props?.data_idx_control__nlp_idx??0);
-  const data_item = useMemo(()=>{
-    return data_list?.[data_idx_control__main_idx??0]
-  }, [data_list, data_idx_control__main_idx]);
   const nlp_data = useMemo(()=>{
     return (data_item?.nlp_outputs??[])[data_idx_control__nlp_idx];
   }, [data_item?.nlp_outputs, data_idx_control__nlp_idx]);
@@ -126,6 +124,10 @@ export default function DetailBlock(props) {
       nlp_data?.sent==null ? null : [
         vNode('span', {className: "fw-bold text-muted"}, "分词数"),
         vNode('span', {}, nlp_data?.sent?.length??0),
+      ],
+      data_item?.block_title==null ? null : [
+        vNode('span', {className: "fw-bold text-muted"}, "块标题"),
+        vNode('span', {}, data_item.block_title),
       ],
     ]),
 

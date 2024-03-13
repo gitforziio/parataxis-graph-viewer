@@ -477,6 +477,7 @@ export default function FileReaderDemo() {
     nlp_data==null ? null :
     vNode(DetailBlock, {
       data_list,
+      data_item,
       data_idx_control__main_idx,
       set__data_idx_control__main_idx,
       data_idx_control__nlp_idx,
